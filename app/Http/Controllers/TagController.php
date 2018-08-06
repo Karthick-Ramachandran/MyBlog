@@ -12,6 +12,10 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function  __construct(){
+        return $this->middleware('admin');
+        }
+        
     public function index()
     {
         return view('admin.tag.index')->with('tags', Tag::all());
@@ -102,3 +106,5 @@ return redirect()->back();
         return redirect('/admin/home');
     }
 }
+
+

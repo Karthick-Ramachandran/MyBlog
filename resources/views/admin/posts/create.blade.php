@@ -47,11 +47,12 @@ Create a New Post
             </div>
         <div class="form-group">
                 <label for="title">Content</label>
-                <textarea name="content" id="" cols="30" rows="10" class="form-control"></textarea>
+                <textarea name="content" id="summernote" cols="30" rows="35" class="form-control"></textarea>
             </div>
             <input style="margin:0 45%;" type="submit" value="Store" class="btn btn-success ">
         </form>
     </div>
 </div>
+
 
 @endsection

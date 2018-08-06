@@ -29,8 +29,16 @@ Edit Post
                 <label for="Category">Select Category</label>
                 <select name="category_id" id="category" class="form-control">
                     @foreach ($categories as $category )
+                 
 
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    <option value="{{ $category->id }}"
+                        
+                            @if($post->category->id == $category->id)
+                                              selected
+                                              
+                                                @endif
+                        
+                        >{{ $category->name }}</option>
                         
                     @endforeach
                 </select>
@@ -40,14 +48,21 @@ Edit Post
 
                 @foreach ($tags as $tag)
                 <div class="checkbox">
-                    <label for=""><input type="checkbox"  value="{{ $tag->id }}" name="tags[]" id="" checked>{{ $tag->tag  }}</label>
+                    <label for=""><input type="checkbox"  value="{{ $tag->id }}" name="tags[]" id="" 
+                        @foreach ($post->tags as $t )
+                            @if($tag->id === $t->id)
+                                   checked
+                            @endif
+                        @endforeach
+                        
+                        >{{ $tag->tag  }}</label>
                         </div>    
                 @endforeach
                 
             </div>
         <div class="form-group">
                 <label for="title">Content</label>
-                <textarea name="content" id="" cols="30" rows="10"  class="form-control">{{ $post->content }}</textarea>
+                <textarea name="content" id="summernote" cols="30" rows="10"  class="form-control">{{ $post->content }}</textarea>
             </div>
             <input style="margin:0 45%;" type="submit" value="Store" class="btn btn-success ">
         </form>

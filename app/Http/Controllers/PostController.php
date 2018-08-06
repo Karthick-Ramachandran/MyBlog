@@ -14,6 +14,10 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function  __construct(){
+        return $this->middleware('admin');
+        }
+        
     public function index()
     {
         return view('admin.posts.index')->with('posts', Post::all());
@@ -28,11 +32,20 @@ class PostController extends Controller
 
     {
         $categories =  Category::all();
-        if($categories->count() == 0){
-            Session::flash('info', 'No category found to add a post, Go ahead and add a category');
+        $tags = Tag::all();
+        if($tags->count() == 0 || $categories->count() == 0){
+
+
+            Session::flash('fail', 'Category or Tag is empty to add a post, Go ahead and add a Missing one');
             return redirect()->back();
+       
+       
         }
+
+
         else{
+
+
         return view('admin.posts.create')->with('categories', $categories)->with('tags', Tag::all());
   
         }
@@ -50,7 +63,7 @@ class PostController extends Controller
         $this->validate($request, [
             'title' => 'required|min:3|max:255',
             'image' =>  'required|image',
-            'content'  => 'required|min:100',
+            'content'  => 'required',
             'category_id' => 'required',
             'tags' => 'required'
 
@@ -68,6 +81,7 @@ class PostController extends Controller
                'category_id' => $request->category_id,
                'slug' => str_slug($request->title),
             ]);
+            
             $post->tags()->attach($request->tags);
 
             Session::flash('success', 'Post created Successfully');
@@ -111,7 +125,7 @@ class PostController extends Controller
         $this->validate($request, [
             'title' => 'required|min:3|max:255',
             'image' =>  'required|image',
-            'content'  => 'required|min:100',
+            'content'  => 'required',
             'category_id' => 'required'
             ]);
 
@@ -130,6 +144,7 @@ $image->move('upload', $newname );
         $post->category_id = $request->category_id;
 
 $post->save();
+$post->tags()->sync($request->tags);
 
 Session::flash('success', 'Post updated Successfully');
 return redirect()->back();

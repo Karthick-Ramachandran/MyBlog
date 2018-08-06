@@ -11,10 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', [
+'uses' => 'FrontendController@index',
+'as' => 'front'
+]);
+Route::get('/post/{slug}', [
+    'uses' => 'FrontendController@page',
+    'as' => 'page.show'
+]);
 
 
 Auth::routes();
@@ -109,6 +113,30 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
         'uses' => 'TagController@destroy',
         'as' => 'tag.delete'
      ]);
+
+     Route::get('/users', [
+'uses' => 'UsersController@index',
+'as' => 'index'
+     ]);
+     Route::get('/users/create', [
+'uses' => 'UsersController@create',
+'as' => 'user.create'
+ ])->middleware('admin');
+  Route::post('/users/create', [
+ 'uses' => 'UsersController@store',
+ 'as' => 'user.store'
+])->middleware('admin');
+
+Route::get('/settings', [
+    'uses' => 'SettingController@index',
+    'as' => 'setting'
+]);
+Route::post('/settings', [
+    'uses' => 'SettingController@update',
+    'as' => 'setting.store'
+]);
+
+
 });
 
 

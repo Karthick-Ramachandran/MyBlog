@@ -1,95 +1,129 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE HTML>
 
-        <title>Laravel</title>
+<html>
+	<head>
+		<title>{{ $title }}</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		
+	</head>
+	<body class="is-loading">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+				<!-- Intro -->
+					<div id="intro">
+						<h1>This is<br />
+						Massively</h1>
+						<p>A free, fully responsive HTML5 + CSS3 site template designed by <a href="https://twitter.com/ajlkn">@ajlkn</a> for <a href="https://html5up.net">HTML5 UP</a><br />
+						and released for free under the <a href="https://html5up.net/license">Creative Commons license</a>.</p>
+						<ul class="actions">
+							<li><a href="#header" class=" button icon solo fa-arrow-down scrolly ">Continue</a></li>
+						</ul>
+					</div>
 
-            .full-height {
-                height: 100vh;
-            }
+				<!-- Header -->
+					<header id="header">
+						<a href="/" class="logo">Massively</a>
+					</header>
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li class="active"><a href="/">Home</a></li>
+							@foreach ($categories as $category)
+							<li><a href="">{{ $category->name }}</a></li>
 
-            .position-ref {
-                position: relative;
-            }
+							@endforeach
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+				<!-- Main -->
+					<div id="main">
 
-            .content {
-                text-align: center;
-            }
+						<!-- Featured Post -->
+							<article class="post featured">
+								<header class="major">
+									<span class="date">  {{ $first_post->created_at->format('F d, D , Y') }}</span>
+									<h2><a href="{{ route('page.show', ['slug' => $first_post->slug])}}"> &nbsp; &nbsp;{{ $first_post->title }}   </a> </h2>
+									 &nbsp; &nbsp; &nbsp; &nbsp;<span>	Posted ( {{ $first_post->created_at->diffForHumans() }} ) </span> <br/>
+									 <a href="#" class="image fit"><img src="" alt="" /></a>
 
-            .title {
-                font-size: 84px;
-            }
+									 <span> So You are interested in {{ $first_post->title}}? <br>
+										Brand new Post is here! </span>
+										</header>
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+								<ul class="actions">
+										<li><a href="{{ route('page.show', ['slug' => $first_post->slug])  }}" class="button">Read Story</a></li>
+								</ul>
+							</article>
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ route('home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
-                </div>
-            @endif
+							<h2 style="text-align:center">Latest Posts</h2>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
+						<!-- Posts -->
+						<section class="posts">
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
-        </div>
-    </body>
+				   @foreach ($post as $posts)
+						<article>
+								<header>
+									<span class="date">{{ $posts->created_at->format('F d, D, Y') }}</span>
+									<h2><a href="{{ route('page.show', ['slug' => $posts->slug])  }}">{{ $posts->title }} <br>
+									</a></h2>
+								</header>
+
+								<span> So You are interested in {{ $posts->title}}? <br>
+								Click Belowto continue </span>
+
+								<br/>
+								<br/>
+								<ul class="actions">
+									<li><a href="{{ route('page.show', ['slug' => $posts->slug])  }}" class="button">Full Story</a></li>
+								</ul>
+							</article>
+				   @endforeach
+				</section>
+	
+										
+						<!-- Footer -->
+							<footer>
+								<div class="pagination">
+									<!--<a href="#" class="previous">Prev</a>-->
+									<a href="#" class="page active">1</a>
+									<a href="#" class="page">2</a>
+									<a href="#" class="page">3</a>
+									<span class="extra">&hellip;</span>
+									<a href="#" class="page">8</a>
+									<a href="#" class="page">9</a>
+									<a href="#" class="page">10</a>
+									<a href="#" class="next">Next</a>
+								</div>
+							</footer>
+
+					</div>
+  
+				
+
+				<!-- Copyright -->
+				
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+			<script src="{{ asset('assets/js/jquery.scrollex.min.js')}}"></script>
+			<script src="{{ asset('assets/js/jquery.scrolly.min.js') }}"></script>
+			<script src="{{ asset('assets/js/skel.min.js') }}"></script>
+			<script src="{{ asset('assets/js/util.js') }}"></script>
+			<script src="{{ asset('assets/js/main.js') }}"></script>
+
+	</body>
 </html>

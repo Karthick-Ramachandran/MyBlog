@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 use Session;
 use App\Category;
-
+use App\Http\Middleware\Admin;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
 {
+
+   
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function  __construct(){
+    return $this->middleware('admin');
+    }
     public function index()
     {
         return view('admin.categories.index')->with('categories', Category::all());
@@ -96,6 +101,12 @@ class CategoriesController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
+
+
+        foreach($category->posts as $post){
+            $post->delete();
+        }
+        
 $category->delete();
 Session::flash('success', 'Category removed');
 return redirect('/admin/home');

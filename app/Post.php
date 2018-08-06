@@ -13,13 +13,13 @@ protected $fillable = [
     'title', 'content', 'image', 'category_id', 'slug'
 ];
 
-public function getImageAttribute($image)
+ public function getImageAttribute($image)
 
 {
     return asset($image);
 }
   
-protected $dates = ['deleted_at'];
+   protected $dates = ['deleted_at'];
 
     public function category(){
         return $this->belongsTo('App\Category');

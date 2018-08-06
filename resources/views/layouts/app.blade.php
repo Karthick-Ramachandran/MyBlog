@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -79,6 +80,8 @@
         </nav>
 
 
+
+
 <div class="container">
         @if(Session::has('success'))
 
@@ -90,15 +93,20 @@
     <div class="alert alert-warning mt-3 text-center">{{ Session::get('info')  }}</div>
 
 @endif
+@if(Session::has('fail'))
+
+<div class="alert alert-danger">{{ Session::get('fail') }}</div>
+@endif
     
     <div class="row">
-            @if(Auth::check())
+            @if(Auth::check() && Auth::user()->admin)
         <div class="col-lg-4">
 
 <ul class="list-group">
     <li class="list-group-item">
         <a href="{{ route('home') }}">Home</a>
     </li>
+   
     <li class="list-group-item">
             <a href="{{ route('create.category') }}">Create Category</a>
         </li>
@@ -117,6 +125,15 @@
             <li class="list-group-item">
                     <a href="{{ route('trashed') }}">Trashed posts</a>
                 </li>
+                
+                    @if(Auth::user()->admin)
+                    <li class="list-group-item">
+                            <a href="{{ route('user.create') }}">Create Admin</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{{ route('setting') }}">See Settings</a>
+                        </li>
+                        @endif
 </ul>
 
         </div>
@@ -129,6 +146,15 @@
     </div>
 
     <!-- Scripts -->
+  
+
     <script src="/js/app.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#summernote').summernote();
+          });
+    </script>
 </body>
 </html>
