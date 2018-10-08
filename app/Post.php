@@ -19,7 +19,12 @@ protected $fillable = [
     return asset($image);
 }
   
+
+
+
    protected $dates = ['deleted_at'];
+
+
 
     public function category(){
         return $this->belongsTo('App\Category');

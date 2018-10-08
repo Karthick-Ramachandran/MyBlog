@@ -36,7 +36,7 @@ class PostController extends Controller
         if($tags->count() == 0 || $categories->count() == 0){
 
 
-            Session::flash('fail', 'Category or Tag is empty to add a post, Go ahead and add a Missing one');
+            Session::flash('fail', 'Category or Tag is empty to add a post, Go ahead and add a Missing one ');
             return redirect()->back();
        
        
@@ -70,7 +70,7 @@ class PostController extends Controller
             ]);
 
             $image = $request->image;
-            $image_new_name = time().$image->getClientOriginalName();
+            $image_new_name = rand(100000, 99999).time().$image->getClientOriginalName();
 
             $image->move('upload', $image_new_name);
 
@@ -87,7 +87,8 @@ class PostController extends Controller
             Session::flash('success', 'Post created Successfully');
             return redirect('/admin/home');
         
-    }
+    
+        }
 
     /**
      * Display the specified resource.

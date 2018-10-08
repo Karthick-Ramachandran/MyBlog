@@ -16,12 +16,15 @@
                             Edit
                         </th>
                         <th>
-                                Delete
-                            </th>
+                               
+                            Delete
+                            
+                        </th>
                     </thead>
                     <tbody>
                        @foreach ($posts as $post )
                            <tr>
+                               
                                <td><img src="{{ $post->image }}" alt="{{ $post->title }}" width="120px" height="70px" ></td>
                                <td>{{ $post->title }}</td>
                                <td> <a href="{{ route('post.edit', ['id' => $post->id]) }}" class="btn btn-primary"> Edit </a> </td>

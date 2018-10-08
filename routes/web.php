@@ -19,6 +19,17 @@ Route::get('/post/{slug}', [
     'uses' => 'FrontendController@page',
     'as' => 'page.show'
 ]);
+Route::group(['prefix' => LaravelLocalization::setLocale()], function()
+{
+	/** ADD ALL LOCALIZED ROUTES INSIDE THIS GROUP **/
+	
+    Route::get('/', [
+        'uses' => 'FrontendController@index',
+        'as' => 'front'
+        ]);
+
+
+});
 
 
 Auth::routes();
@@ -118,6 +129,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 'uses' => 'UsersController@index',
 'as' => 'index'
      ]);
+     
      Route::get('/users/create', [
 'uses' => 'UsersController@create',
 'as' => 'user.create'
@@ -135,7 +147,20 @@ Route::post('/settings', [
     'uses' => 'SettingController@update',
     'as' => 'setting.store'
 ]);
+Route::get('/gallery', [
+    'uses' => 'GalleryController@index',
+    'as' => 'gallery'
+]);
 
+
+Route::post('/gallery', [
+    'uses' => 'GalleryController@store',
+    'as' => 'gallery.store'
+]);
+
+Route::get('/show/gallery', [
+    'uses' => 'GalleryController@display',
+]);
 
 });
 

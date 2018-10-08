@@ -2,25 +2,19 @@
 
 namespace App\Http\Controllers;
 use Session;
-use App\Category;
-use App\Http\Middleware\Admin;
+use App\Gallery;
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class GalleryController extends Controller
 {
-
-   
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function  __construct(){
-    return $this->middleware('admin');
-    }
     public function index()
     {
-        return view('admin.categories.index')->with('categories', Category::all());
+        return view('gallery');
     }
 
     /**
@@ -28,9 +22,11 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function view()
     {
-        return view('admin.categories.create');
+        $gla = Gallery::all();
+
+        return view('see')->with('gallery', $gla);
     }
 
     /**
@@ -41,14 +37,29 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-           'name' => 'required|min:5|max:20'
+        $input=$request->all();
+        $images=array();
+        if($files=$request->file('images')){
+            foreach($files as $file){
+                $name=time().$file->getClientOriginalName();
+                $file->move('upload',$name);
+                $images[]=$name;
+            }
+        }
+    
+        Gallery::create( [
+            'images'=>  'upload/' .$name,
         ]);
-        $category = new Category;
-        $category->name = $request->name ;
-        $category->save();
-        Session::flash('success', 'Category added Successfully');
-       return redirect('/admin/home');
+    
+
+       Session::flash('success', 'Photos Updated');
+       return redirect()->back();
+
+
+    }
+    public function display(){
+
+        return view('showgallery')->with('gallery', Gallery::all());
 
     }
 
@@ -60,7 +71,6 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -71,8 +81,7 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::find($id);
-        return view('admin.categories.edit')->with('category', $category);
+        //
     }
 
     /**
@@ -84,12 +93,7 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Category::find($id);
-
-        $category->name = $request->name ;
-        $category->save();
-        Session::flash('success', 'Category Edited');
-        return redirect('/admin/home');
+        //
     }
 
     /**
@@ -100,16 +104,6 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
-
-
-        foreach($category->posts as $post){
-            $post->delete();
-        }
-        
-$category->delete();
-Session::flash('success', 'Category removed');
-return redirect('/admin/home');
-
+        //
     }
 }
